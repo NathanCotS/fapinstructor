@@ -12,6 +12,7 @@ const defaultConfig = {
   tumblrId:
     "fapstergifs, allcowgirl, mar-cuss-blowjob-gifs, pornonmotion[blowjob,cumshot]",
   failedIds: [],
+  humblrTag: "masturbation, cumshot, blowjob, anal",
   redditId: "60fpsporn, porninaminute",
   gifs: true,
   pictures: true,
