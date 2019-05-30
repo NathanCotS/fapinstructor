@@ -73,12 +73,14 @@ class ConfigPage extends React.Component {
       switch (name) {
         case "tumblrId":
         case "redditId":
-        case "humblrTag": {
+        case "humblrTag":
+        case "humblrUser": {
           delete errors.mediaSource;
           if (
             store.config.tumblrId.length === 0 &&
             store.config.redditId.length === 0 &&
-            store.config.humblrTag.length === 0
+            store.config.humblrTag.length === 0 &&
+            store.config.humblrUser.length === 0
           ) {
             errors.mediaSource = "Must have at least one media source";
           }
@@ -483,6 +485,29 @@ class ConfigPage extends React.Component {
                     ) : (
                       <FormHelperText>
                         You can add multiple tags for humblr each seperated by a
+                        comma
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl
+                    className={classes.control}
+                    required
+                    error={!!errors.mediaSource}
+                  >
+                    <InputLabel>Humblr Users</InputLabel>
+                    <Input
+                      id="humblrUser"
+                      required
+                      value={store.config.humblrUser}
+                      onChange={this.handleChange("humblrUser")}
+                    />
+                    {errors.mediaSource ? (
+                      <FormHelperText>{errors.mediaSource}</FormHelperText>
+                    ) : (
+                      <FormHelperText>
+                        You can add multiple usernames for humblr each seperated by a
                         comma
                       </FormHelperText>
                     )}

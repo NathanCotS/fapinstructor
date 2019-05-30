@@ -3,7 +3,7 @@ import uniq from "lodash.uniq";
 import store from "store";
 import fetchTumblrPics from "api/fetchTumblrPics";
 import fetchRedditPics from "api/fetchRedditPics";
-import fetchHumblrPics from "api/fetchHumblrPics";
+import {fetchHumblrPicsByTag, fetchHumblrPicsByUser} from "api/fetchHumblrPics";
 
 export const nextSlide = async () => {
   if (store.game.mediaFrozen) {
@@ -22,7 +22,7 @@ export const nextSlide = async () => {
 };
 
 const fetchPictures = async () => {
-  const { tumblrId, redditId, humblrTag } = store.config;
+  const { tumblrId, redditId, humblrTag, humblrUser } = store.config;
   var splitOnCommaOutsideSqBr = /,(?![^[]*])/g;
 
   const tumblrIds =
@@ -30,7 +30,9 @@ const fetchPictures = async () => {
   const redditIds =
     redditId.length > 0 && redditId.split(splitOnCommaOutsideSqBr).map(id => id.trim());
   const humblrTags =
-    humblrTag.length > 0 && humblrTag.split(splitOnCommaOutsideSqBr).map(id => id.trim());
+    humblrTag.length > 0 && humblrTag.split(splitOnCommaOutsideSqBr).map(tag => tag.trim());
+  const humblrUsers =
+    humblrUser.length > 0 && humblrUser.split(splitOnCommaOutsideSqBr).map(tag => tag.trim());
 
   if (tumblrIds instanceof Array) {
     tumblrIds.forEach((id, index) => {
@@ -65,7 +67,12 @@ const fetchPictures = async () => {
   }
   if (humblrTags) {
     fetches = fetches.concat(
-      humblrTags.map((tag, index) => fetchHumblrPics(tag))
+      humblrTags.map((tag, index) => fetchHumblrPicsByTag(tag))
+    );
+  }
+  if (humblrUsers) {
+    fetches = fetches.concat(
+      humblrUsers.map((tag, index) => fetchHumblrPicsByUser(tag))
     );
   }
 
