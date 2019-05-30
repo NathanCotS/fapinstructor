@@ -1,5 +1,13 @@
 import store from "store";
-import clientToken from "../humblrCreds.js" 
+
+/*
+  Access token for a dummy account on humblr.social
+  Has only read access and the account is empty
+  Read https://docs.joinmastodon.org/api/authentication/#example-authorization-code-flow
+  or https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#apps
+  for further info
+*/
+const humblrClientToken = "2d3545ff64750211858384914ce2ce551af347f563ce82b97603c1f019554001";
 
 const fetchHumblrPicsByTag = async (tag) => {
   const { pictures, gifs, videos } = store.config;
@@ -28,13 +36,13 @@ const fetchHumblrPicsByTag = async (tag) => {
   }
 
 const fetchHumblrPicsByUser = async (user) => {
-  const { pictures, gifs, videos } = store.config;
+  const { pictures, gifs, videos} = store.config;
   const limit = 20;
 
   // first fetch user ID by name. We need an Auth Token for this
   let userId = await fetch(
     `https://humblr.social/api/v1/accounts/search?q=${encodeURIComponent(user)}&limit=1`,
-    {headers:{'Authorization':`Bearer ${clientToken}`}}
+    {headers:{'Authorization':`Bearer ${humblrClientToken}`}}
   )
     .then(response => response.json())
     .then(data => {
